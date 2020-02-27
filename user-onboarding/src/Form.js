@@ -1,9 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { withFormik, Form, Field } from "formik";
+import styled from 'styled-components';
 import * as Yup from "yup";
 import axios from "axios";
 
 
+const UserForm = styled.div`
+    background:papayawhip;
+    display:flex;
+    justify-content:center;
+    color:darkslategray;
+    width:25%;
+    text-align:left;
+    border-radius: 4px;
+`;
+
+const InputWrapper = styled.div`
+        width:100%;
+        display:flex;
+        margin:16px auto;
+    
+`;
+
+const InputLabel = styled.label`
+    margin-right:12px;
+`;
 
 const OnboardForm = ({ values, errors, touched, status }) => {
     
@@ -17,14 +38,13 @@ const OnboardForm = ({ values, errors, touched, status }) => {
       status && setUsers(users => [...users, status]);
     }, [status]);
     return (
-      <div className="user-form">
+      <UserForm>
        
         <Form>
-         
-         <div>
-          <label htmlFor="name">
-            Name
-          
+         <InputWrapper>
+          <InputLabel>
+            Name: 
+            </InputLabel>
             <Field
               id="name" 
               type="text"
@@ -34,12 +54,13 @@ const OnboardForm = ({ values, errors, touched, status }) => {
             {touched.name && errors.name && (
               <p className="errors">{errors.name}</p>
             )}
-          </label>
-          </div>
+          
+          </InputWrapper>
 
-          <div>
-          <label htmlFor="email">
+          <InputWrapper>
+          <InputLabel>
             Email
+            </InputLabel>
             <Field id="email" 
             type="email" 
             name="email" 
@@ -47,31 +68,33 @@ const OnboardForm = ({ values, errors, touched, status }) => {
             {touched.email && errors.email && (
               <p className="errors">{errors.email}</p>
               )}
-          </label>
-         </div>
+         
+         </InputWrapper>
 
-          <div>
+          <InputWrapper>
         {touched.password && errors.password && <p>{errors.password}</p>}
-         <label htmlFor="password">
+         <InputLabel>
          Password:
+         </InputLabel>
          <Field type="password" 
          name="password" 
          placeholder="Password" />
-         </label>
-       </div>
+         
+       </InputWrapper>
 
-          <div>
-          <label className="checkbox-container">
+          <InputWrapper>
+          <InputLabel>
             Terms of Service
+            </InputLabel>
             <Field
               type="checkbox"
               name="tos"
               checked={values.tos}
             />
             <span className="checkmark" />
-          </label>
-          </div>
           
+          </InputWrapper>
+
           <button type="submit">Submit!</button>
         </Form>
         
@@ -85,7 +108,7 @@ const OnboardForm = ({ values, errors, touched, status }) => {
             </ul>
           );
         })}
-      </div>
+      </UserForm>
     );
   };
   
@@ -116,8 +139,12 @@ const OnboardForm = ({ values, errors, touched, status }) => {
   
     // passed through props to Form component in Formik
 
-    handleSubmit(values, { setStatus, resetForm }) {
-      console.log("submitting", values);
+    handleSubmit(values, { setStatus,setError, resetForm  }) {
+      //console.log("submitting", values);
+
+      if (values.email === "boo@hoho.com") {
+        setError({ email: "That email is already taken" });
+      } else {
       axios
         .post("https://reqres.in/api/users/", values)
         .then(res => {
@@ -129,6 +156,8 @@ const OnboardForm = ({ values, errors, touched, status }) => {
           resetForm();
         })
         .catch(err => console.log(err.response));
+
+    }
     }
   })(OnboardForm);
   export default FormikOnboardForm;
