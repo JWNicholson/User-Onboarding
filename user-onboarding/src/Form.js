@@ -1,6 +1,7 @@
 import React from "react";
 import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
 
 function LoginForm({ values, errors, touched }) {
   return (
@@ -50,9 +51,22 @@ const FormikLoginForm = withFormik({
       .required("Password is required")
   }),
 
-  handleSubmit(values) {
-    console.log(values);
-    //THIS IS WHERE YOU DO YOUR FORM SUBMISSION CODE... HTTP REQUESTS, ETC.
+  handleSubmit(values, { resetForm, setErrors, setSubmitting }) {
+    if (values.email === "eatthis@hoho.com") {
+      setErrors({ email: "That email is not available" });
+    } else {
+      axios
+        .post("https://reqres.in/api/users/", values)
+        .then(res => {
+          console.log(res); // Data was created successfully 
+          resetForm();
+          setSubmitting(false);
+        })
+        .catch(err => {
+          console.log(err); // There was an error creating the data 
+          setSubmitting(false);
+        });
+    }
   }
 })(LoginForm);
 
