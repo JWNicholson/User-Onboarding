@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Form from "./Form";
+ import OnboardForm from "./Form";
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
           Learn React Or Else!
         </a>
 
-        <Form />
+        <OnboardForm />
       </header>
     </div>
   );
