@@ -39,9 +39,9 @@ const FormikLoginForm = withFormik({
   },
 
   validationSchema: Yup.object().shape({
-    // name: Yup.string()
-    //     .name("That's not a name")
-    //     .required("Name is required"),
+    name: Yup.string()
+    .min(3, "Name must be at least 3 letters")
+    .required("Name is required"),
     email: Yup.string()
       .email("Email not valid")
       .required("Email is required"),
