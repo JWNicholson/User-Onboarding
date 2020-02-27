@@ -13,18 +13,32 @@ const UserForm = styled.div`
     width:25%;
     text-align:left;
     border-radius: 4px;
+    margin-bottom:36px;
 `;
 
 const InputWrapper = styled.div`
         width:100%;
+        height:auto;
         display:flex;
-        margin:16px auto;
-    
+        flex-direction:column;
+      justify-content: space-between;
+      margin:10px auto;
 `;
 
 const InputLabel = styled.label`
-    margin-right:12px;
+    margin-left:0 12px;
 `;
+
+const SubmitButton = styled.button`
+        color:white;
+        margin:12px;
+        border:none;
+        background:orange;
+        font-weight:bold;
+        height:38px;
+`;
+
+
 
 const OnboardForm = ({ values, errors, touched, status }) => {
     
@@ -45,12 +59,14 @@ const OnboardForm = ({ values, errors, touched, status }) => {
           <InputLabel>
             Name: 
             </InputLabel>
+          
             <Field
               id="name" 
               type="text"
               name="name"
               placeholder="name"
             />
+           
             {touched.name && errors.name && (
               <p className="errors">{errors.name}</p>
             )}
@@ -74,7 +90,7 @@ const OnboardForm = ({ values, errors, touched, status }) => {
           <InputWrapper>
         {touched.password && errors.password && <p>{errors.password}</p>}
          <InputLabel>
-         Password:
+         Password 
          </InputLabel>
          <Field type="password" 
          name="password" 
@@ -95,19 +111,24 @@ const OnboardForm = ({ values, errors, touched, status }) => {
           
           </InputWrapper>
 
-          <button type="submit">Submit!</button>
+          <SubmitButton type="submit">Submit!</SubmitButton>
+
+          
         </Form>
         
         {/*map through data and show it*/}
         {users.map(user => {
           return (
+           
             <ul key={user.id}>
               <li>Name: {user.name}</li>
               <li>Email: {user.email}</li>
               <li>Password: {user.password}</li>
             </ul>
+           
           );
         })}
+        
       </UserForm>
     );
   };
