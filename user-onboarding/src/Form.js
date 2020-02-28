@@ -39,7 +39,6 @@ const SubmitButton = styled.button`
 `;
 
 
-
 const OnboardForm = ({ values, errors, touched, status }) => {
     
     // local state that holds successful form submission data
